@@ -61,9 +61,7 @@ class Tableau1 extends Phaser.Scene {
     initKeyboard(){
 
         let me=this;
-        this.input.keyboard.on('keyup',function (kevent){
-            
-        }
+        //this.input.keyboard.on('keyup',function (kevent)
     }
 
     update(){
