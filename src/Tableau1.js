@@ -56,12 +56,31 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.balle,this.gauche);
 
         this.initKeyboard();
-
+        this.input.keyboard.createCursorKeys();
     }
     initKeyboard(){
 
         let me=this;
-        //this.input.keyboard.on('keyup',function (kevent)
+        this.input.keyboard.on('keydown', function (kevent) {
+            switch (kevent.keyCode) {
+            }
+        });
+        this.input.keyboard.on('keyup', function (kevent) {
+            switch (kevent.keyCode) {
+
+
+                case Phaser.Input.Keyboard.KeyCodes.A:
+                    if (this.input.keyboard.checkDown(cursors.up, 150))
+                    {
+                        this.droite.y -= 32;
+                    }
+                    else if (this.input.keyboard.checkDown(cursors.down, 150))
+                    {
+                        this.droite.y += 32;
+                    }
+                    break;
+            }
+        });
     }
 
     update(){
