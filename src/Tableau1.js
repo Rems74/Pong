@@ -69,16 +69,40 @@ class Tableau1 extends Phaser.Scene {
             switch (kevent.keyCode)
             {
                 case Phaser.Input.Keyboard.KeyCodes.A:
-                    me.gauche.body.setVelocityY(-400);
+                    if(me.gauche.y < me.haut.y+20){
+                        me.gauche.setVelocityY(0)
+                    }
+                    else {
+                        me.gauche.body.setVelocityY(-400);
+                    }
                     break;
+
+
                 case Phaser.Input.Keyboard.KeyCodes.Q:
-                    me.gauche.body.setVelocityY(400);
+                    if(me.gauche.y > me.bas.y-100){
+                        me.gauche.setVelocityY(0)
+                    }else {
+                        me.gauche.body.setVelocityY(400);
+                    }
                     break;
+
+
                 case Phaser.Input.Keyboard.KeyCodes.P:
-                    me.droite.body.setVelocityY(-400);
+                    if(me.droite.y < me.haut.y+20){
+                        me.droite.setVelocityY(0)
+                    }
+                    else{
+                        me.droite.body.setVelocityY(-400);
+                    }
                     break;
+
+
                 case Phaser.Input.Keyboard.KeyCodes.M:
-                    me.droite.body.setVelocityY(400);
+                    if(me.droite.y > me.bas.y-100){
+                        me.droite.setVelocityY(0)
+                    }else {
+                        me.droite.body.setVelocityY(400);
+                    }
                     break;
             }
         });
