@@ -46,7 +46,7 @@ class Tableau1 extends Phaser.Scene {
 
         //Raquette Gauche
 
-        this.gauche=this.physics.add.image(10,this.hauteur/2,'square').setOrigin( 0, 0);
+        this.gauche=this.physics.add.image(0,this.hauteur/2,'square').setOrigin( 0, 0);
         this.gauche.setDisplaySize(20,100);
         this.gauche.body.setAllowGravity(false)
         this.gauche.setImmovable(true)
