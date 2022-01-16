@@ -29,7 +29,7 @@ class Tableau1 extends Phaser.Scene {
 
         this.balle=this.physics.add.image(this.largeur/2,this.hauteur/2,'circle').setOrigin(0,0)
         this.balle.setDisplaySize(20,20);
-        this.balle.body.setBounce(1.1,1.1)
+        this.balle.body.setBounce(1.2,1.2)
         this.balle.setVelocity(300)
         this.balle.body.setMaxVelocityY(300,300)
 
@@ -128,16 +128,23 @@ class Tableau1 extends Phaser.Scene {
 
         update(){
 
-            if(this.balle.x>this.largeur) {
-                this.balle.x = 0
+            if(this.balle.x > this.largeur){
+                this.balle.x = this.largeur/2;
+                this.balle.y = this.hauteur/2;
+                this.balle.body.setVelocityX(Phaser.Math.Between(-300,300));
+                this.balle.body.setVelocityY(Phaser.Math.Between(-300,300));
             }
-
-            if(this.balle.y>this.largeur){
+            if(this.balle.x < 0){
+                this.balle.x = this.largeur/2;
+                this.balle.y = this.hauteur/2;
+                this.balle.body.setVelocityX(Phaser.Math.Between(-300,300));
+                this.balle.body.setVelocityY(Phaser.Math.Between(-300,300));
+            }
+            if(this.balle.y < 0){
                 this.balle.y = 0
             }
-
-            if(this.balle.y>this.hauteur){
-                this.balle.y = 0
+            if(this.balle.y > this.hauteur){
+                this.balle.y = this.hauteur
             }
 
         }
