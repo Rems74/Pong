@@ -37,69 +37,89 @@ class Tableau1 extends Phaser.Scene {
 
         //Raquette Droite
 
-        this.gauche=this.physics.add.image(this.largeur-20,this.hauteur/2,'square').setOrigin( 0, 0);
-        this.gauche.setDisplaySize(20,100);
-        this.gauche.body.setAllowGravity(false)
-        this.gauche.setImmovable(true)
+        this.droite=this.physics.add.image(this.largeur-20,this.hauteur/2,'square').setOrigin( 0, 0);
+        this.droite.setDisplaySize(20,100);
+        this.droite.body.setAllowGravity(false)
+        this.droite.setImmovable(true)
+        this.droite.body.setVelocityY(0);
 
 
         //Raquette Gauche
 
-        this.droite=this.physics.add.image(0,this.hauteur/2,'square').setOrigin( 0, 0);
-        this.droite.setDisplaySize(20,100);
-        this.droite.body.setAllowGravity(false)
-        this.droite.setImmovable(true)
+        this.gauche=this.physics.add.image(0,this.hauteur/2,'square').setOrigin( 0, 0);
+        this.gauche.setDisplaySize(20,100);
+        this.gauche.body.setAllowGravity(false)
+        this.gauche.setImmovable(true)
+        this.gauche.body.setVelocityY(0);
 
         this.physics.add.collider(this.balle,this.bas);
         this.physics.add.collider(this.balle,this.haut);
         this.physics.add.collider(this.balle,this.droite);
         this.physics.add.collider(this.balle,this.gauche);
 
+
+
         this.initKeyboard();
-        this.input.keyboard.createCursorKeys();
     }
     initKeyboard(){
 
         let me=this;
-        this.input.keyboard.on('keydown', function (kevent) {
-            switch (kevent.keyCode) {
+        this.input.keyboard.on('keydown', function(kevent)
+        {
+            switch (kevent.keyCode)
+            {
+                case Phaser.Input.Keyboard.KeyCodes.A:
+                    me.gauche.body.setVelocityY(-400);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.Q:
+                    me.gauche.body.setVelocityY(400);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.P:
+                    me.droite.body.setVelocityY(-400);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.M:
+                    me.droite.body.setVelocityY(400);
+                    break;
             }
         });
-        this.input.keyboard.on('keyup', function (kevent) {
-            switch (kevent.keyCode) {
-
-
+        this.input.keyboard.on('keyup', function(kevent)
+        {
+            switch (kevent.keyCode)
+            {
                 case Phaser.Input.Keyboard.KeyCodes.A:
-                    if (this.input.keyboard.checkDown(cursors.up, 150))
-                    {
-                        this.droite.y -= 32;
-                    }
-                    else if (this.input.keyboard.checkDown(cursors.down, 150))
-                    {
-                        this.droite.y += 32;
-                    }
+                    me.gauche.body.setVelocityY(0);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.Q:
+                    me.gauche.body.setVelocityY(0);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.P:
+                    me.droite.body.setVelocityY(0);
+                    break;
+                case Phaser.Input.Keyboard.KeyCodes.M:
+                    me.droite.body.setVelocityY(0);
                     break;
             }
         });
     }
 
-    update(){
+        update(){
 
-        if(this.balle.x>this.largeur) {
-            this.balle.x = 0
+            if(this.balle.x>this.largeur) {
+                this.balle.x = 0
+            }
+
+            if(this.balle.y>this.largeur){
+                this.balle.y = 0
+            }
+
+            if(this.balle.y>this.hauteur){
+                this.balle.y = 0
+            }
+
         }
 
-        if(this.balle.y>this.largeur){
-            this.balle.y = 0
-        }
 
-        if(this.balle.y>this.hauteur){
-            this.balle.y = 0
-        }
+
 
     }
 
-
-
-
-}
