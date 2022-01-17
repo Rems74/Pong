@@ -5,6 +5,7 @@ class Tableau1 extends Phaser.Scene {
     preload() {
         this.load.image('circle','assets/rond.png')
         this.load.image('square','assets/carre.png')
+        this.load.image('space','assets/space.jpg')
     }
 
 
@@ -12,17 +13,22 @@ class Tableau1 extends Phaser.Scene {
         this.hauteur=500
         this.largeur=1000
 
+        let Space=this.add.image(0,0,'space').setOrigin(0,0);
+        Space.scale=1.2
+
         //Barre Haut
         this.haut=this.physics.add.image(0,0,'square').setOrigin( 0, 0);
         this.haut.setDisplaySize(this.largeur,20);
         this.haut.body.setAllowGravity(false);
         this.haut.setImmovable(true)
+        this.haut.setTintFill(0xffffff)
 
         //Barre Bas
         this.bas=this.physics.add.image(0,this.hauteur-20,'square').setOrigin( 0, 0);
         this.bas.setDisplaySize(this.largeur,20);
         this.bas.body.setAllowGravity(false);
         this.bas.setImmovable(true)
+        this.bas.setTintFill(0xffffff)
 
 
         //Balle
@@ -31,36 +37,66 @@ class Tableau1 extends Phaser.Scene {
         this.balle.setDisplaySize(20,20);
         this.balle.body.setBounce(1.2,1.2)
         this.balle.setVelocity(300)
+        this.balle.setVelocityX(Phaser.Math.Between(-200,200))
+        this.balle.setVelocityY(Phaser.Math.Between(0,0))
         this.balle.body.setMaxVelocityY(300,300)
+        this.balle.setTintFill(0xffffff)
 
 
 
         //Raquette Droite
 
-        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2,'square').setOrigin( 0, 0);
+        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2-50,'square').setOrigin( 0, 0);
         this.droite.setDisplaySize(20,100);
         this.droite.body.setAllowGravity(false)
         this.droite.setImmovable(true)
         this.droite.body.setVelocityY(0);
+        this.droite.setTintFill(0xffffff)
 
 
         //Raquette Gauche
 
-        this.gauche=this.physics.add.image(10,this.hauteur/2,'square').setOrigin( 0, 0);
+        this.gauche=this.physics.add.image(10,this.hauteur/2-50,'square').setOrigin( 0, 0);
         this.gauche.setDisplaySize(20,100);
         this.gauche.body.setAllowGravity(false)
         this.gauche.setImmovable(true)
         this.gauche.body.setVelocityY(0);
+        this.gauche.setTintFill(0xffffff)
+
+        //Physique
+
+        let me=this;
 
         this.physics.add.collider(this.balle,this.bas);
         this.physics.add.collider(this.balle,this.haut);
-        this.physics.add.collider(this.balle,this.droite);
+
+        this.physics.add.collider(this.balle,this.droite, function(){
+            console.log('touche droit')
+            me.rebond(me.droite)
+        });
         this.physics.add.collider(this.balle,this.gauche);
 
 
 
         this.initKeyboard();
     }
+
+    rebond(raquette){
+
+        let hauteurRaquette=raquette.displayHeight;
+
+        let positionRelativeRaquette=(this.balle.y-raquette.y);
+        
+        console.log(raquette.y);
+        console.log(this.balle.y);
+        console.log(this.balle.y-raquette.y)
+
+
+    }
+
+    //Initialisation touches
+
+
     initKeyboard(){
 
         let me=this;
