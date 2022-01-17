@@ -3,9 +3,10 @@ class Tableau1 extends Phaser.Scene {
 
 
     preload() {
-        this.load.image('circle','assets/rond.png')
+        this.load.image('circle','assets/moon.png')
         this.load.image('square','assets/carre.png')
         this.load.image('space','assets/space.jpg')
+        this.load.image('ovni','assets/ovni.png')
     }
 
 
@@ -39,29 +40,26 @@ class Tableau1 extends Phaser.Scene {
         this.balle.setVelocity(300)
         this.balle.setVelocityX(Phaser.Math.Between(-200,200))
         this.balle.setVelocityY(Phaser.Math.Between(0,0))
-        this.balle.body.setMaxVelocityY(300,300)
-        this.balle.setTintFill(0xffffff)
+        this.balle.body.setMaxVelocityY(200,200)
 
 
 
         //Raquette Droite
 
-        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2-50,'square').setOrigin( 0, 0);
+        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2-50,'ovni').setOrigin( 0, 0);
         this.droite.setDisplaySize(20,100);
         this.droite.body.setAllowGravity(false)
         this.droite.setImmovable(true)
         this.droite.body.setVelocityY(0);
-        this.droite.setTintFill(0xffffff)
 
 
         //Raquette Gauche
 
-        this.gauche=this.physics.add.image(10,this.hauteur/2-50,'square').setOrigin( 0, 0);
+        this.gauche=this.physics.add.image(10,this.hauteur/2-50,'ovni').setOrigin( 0, 0);
         this.gauche.setDisplaySize(20,100);
         this.gauche.body.setAllowGravity(false)
         this.gauche.setImmovable(true)
         this.gauche.body.setVelocityY(0);
-        this.gauche.setTintFill(0xffffff)
 
         //Physique
 
@@ -83,14 +81,22 @@ class Tableau1 extends Phaser.Scene {
 
     rebond(raquette){
 
-        let hauteurRaquette=raquette.displayHeight;
+        let me=this;
 
-        let positionRelativeRaquette=(this.balle.y-raquette.y);
-        
-        console.log(raquette.y);
-        console.log(this.balle.y);
-        console.log(this.balle.y-raquette.y)
+        console.log(raquette.y)
+        console.log(me.balle.y)
+        console.log((me.balle.y)-(raquette.y))
 
+        let hauteurRaquette = raquette.displayHeight;
+
+        let positionRelativeRaquette =(this.balle.y-raquette.y);
+
+        positionRelativeRaquette = (positionRelativeRaquette/hauteurRaquette);
+
+        positionRelativeRaquette = (positionRelativeRaquette*2-1);
+        console.log(positionRelativeRaquette);
+
+        this.balle.setVelocityY( this.balle.body.velocity.y + positionRelativeRaquette * hauteurRaquette)
 
     }
 
@@ -184,9 +190,6 @@ class Tableau1 extends Phaser.Scene {
             }
 
         }
-
-
-
 
     }
 
