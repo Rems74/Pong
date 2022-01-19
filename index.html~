@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Space Pong!</title>
+    <title>Le Pong là!</title>
     <link rel="icon" href="https://img.icons8.com/cotton/100/000000/tennis-ball--v4.png"/>
     <meta name="description" content="Un Pong.">
     <script type="text/javascript" src="lib/phaser.js"></script>

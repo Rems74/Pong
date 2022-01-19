@@ -6,7 +6,8 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('circle','assets/moon.png')
         this.load.image('square','assets/carre.png')
         this.load.image('space','assets/space.jpg')
-        this.load.image('ovni','assets/ovni.png')
+        this.load.image('ovni1','assets/soucoupe_1.png')
+        this.load.image('ovni2','assets/soucoupe_2.png')
     }
 
 
@@ -46,7 +47,7 @@ class Tableau1 extends Phaser.Scene {
 
         //Raquette Droite
 
-        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2-50,'ovni').setOrigin( 0, 0);
+        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2-50,'ovni2').setOrigin( 0, 0);
         this.droite.setDisplaySize(20,100);
         this.droite.body.setAllowGravity(false)
         this.droite.setImmovable(true)
@@ -55,7 +56,7 @@ class Tableau1 extends Phaser.Scene {
 
         //Raquette Gauche
 
-        this.gauche=this.physics.add.image(10,this.hauteur/2-50,'ovni').setOrigin( 0, 0);
+        this.gauche=this.physics.add.image(10,this.hauteur/2-50,'ovni1').setOrigin( 0, 0);
         this.gauche.setDisplaySize(20,100);
         this.gauche.body.setAllowGravity(false)
         this.gauche.setImmovable(true)
