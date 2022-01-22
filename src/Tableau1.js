@@ -22,15 +22,13 @@ class Tableau1 extends Phaser.Scene {
         this.haut=this.physics.add.image(0,0,'square').setOrigin( 0, 0);
         this.haut.setDisplaySize(this.largeur,20);
         this.haut.body.setAllowGravity(false);
-        this.haut.setImmovable(true)
-        this.haut.setTintFill(0xffffff)
+        this.haut.setImmovable(true);
 
         //Barre Bas
         this.bas=this.physics.add.image(0,this.hauteur-20,'square').setOrigin( 0, 0);
         this.bas.setDisplaySize(this.largeur,20);
         this.bas.body.setAllowGravity(false);
-        this.bas.setImmovable(true)
-        this.bas.setTintFill(0xffffff)
+        this.bas.setImmovable(true);
 
 
         //Balle
@@ -75,7 +73,10 @@ class Tableau1 extends Phaser.Scene {
         });
         this.physics.add.collider(this.balle,this.gauche);
 
+        //Pour compter les points
 
+        this.jGauche = new Joueur('P1','jGauche');
+        this.jDroite = new Joueur('P2','jDroite');
 
         this.initKeyboard();
     }
@@ -99,6 +100,10 @@ class Tableau1 extends Phaser.Scene {
 
         this.balle.setVelocityY( this.balle.body.velocity.y + positionRelativeRaquette * hauteurRaquette)
 
+    }
+
+    win(joueur){
+        joueur.score ++;
     }
 
     //Initialisation touches
@@ -172,12 +177,14 @@ class Tableau1 extends Phaser.Scene {
         update(){
 
             if(this.balle.x > this.largeur){
+                this.win(this.jGauche);
                 this.balle.x = this.largeur/2;
                 this.balle.y = this.hauteur/2;
                 this.balle.body.setVelocityX(Phaser.Math.Between(-300,300));
                 this.balle.body.setVelocityY(Phaser.Math.Between(-300,300));
             }
             if(this.balle.x < 0){
+                this.win(this.jDroite);
                 this.balle.x = this.largeur/2;
                 this.balle.y = this.hauteur/2;
                 this.balle.body.setVelocityX(Phaser.Math.Between(-300,300));
