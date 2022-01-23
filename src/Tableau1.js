@@ -68,15 +68,19 @@ class Tableau1 extends Phaser.Scene {
 
         let me=this;
 
-        this.physics.add.collider(this.balle,this.bas);
-        this.physics.add.collider(this.balle,this.haut);
+        this.physics.add.collider(this.balle,this.bas, function(){
+            me.sound.play('balle');
+        });
+        this.physics.add.collider(this.balle,this.haut, function(){
+            me.sound.play('balle');
+        });
 
         this.physics.add.collider(this.balle,this.droite, function(){
             console.log('touche droit')
             me.rebond(me.droite)
             me.sound.play('balle');
         });
-        
+
         this.physics.add.collider(this.balle,this.gauche, function(){
             console.log('touche gauche')
             me.rebond(me.gauche)
