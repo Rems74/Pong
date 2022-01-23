@@ -10,10 +10,15 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('ovni2','assets/soucoupe_2.png')
         this.load.image('aster','assets/asteroides.png')
         this.load.audio('balle','assets/balle.mp3')
+        this.load.audio('vic','assets/victoire.mp3')
     }
 
 
     create() {
+
+        this.vic= this.sound.add('vic', {loop: false});
+        this.vic.volume = 1
+
         this.hauteur=500
         this.largeur=1000
 
@@ -119,6 +124,8 @@ class Tableau1 extends Phaser.Scene {
 
     win(joueur){
         joueur.score ++;
+
+        this.vic.play();
     }
 
     //Initialisation touches
