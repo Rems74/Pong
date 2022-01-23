@@ -8,6 +8,8 @@ class Tableau1 extends Phaser.Scene {
         this.load.image('space','assets/space.jpg')
         this.load.image('ovni1','assets/soucoupe_1.png')
         this.load.image('ovni2','assets/soucoupe_2.png')
+        this.load.image('aster','assets/asteroides.png')
+        this.load.audio('balle','assets/balle.mp3')
     }
 
 
@@ -23,13 +25,15 @@ class Tableau1 extends Phaser.Scene {
         this.haut.setDisplaySize(this.largeur,20);
         this.haut.body.setAllowGravity(false);
         this.haut.setImmovable(true);
+        this.haut.setTintFill(0x000000);
+        let Aster=this.add.image(0,50,'aster').setOrigin(0,0);
 
         //Barre Bas
         this.bas=this.physics.add.image(0,this.hauteur-20,'square').setOrigin( 0, 0);
         this.bas.setDisplaySize(this.largeur,20);
         this.bas.body.setAllowGravity(false);
         this.bas.setImmovable(true);
-
+        this.bas.setTintFill(0x000000)
 
         //Balle
 
@@ -45,8 +49,8 @@ class Tableau1 extends Phaser.Scene {
 
         //Raquette Droite
 
-        this.droite=this.physics.add.image(this.largeur-40,this.hauteur/2-50,'ovni2').setOrigin( 0, 0);
-        this.droite.setDisplaySize(20,100);
+        this.droite=this.physics.add.image(this.largeur-70,this.hauteur/2-50,'ovni2').setOrigin( 0, 0);
+        this.droite.setDisplaySize(60,100);
         this.droite.body.setAllowGravity(false)
         this.droite.setImmovable(true)
         this.droite.body.setVelocityY(0);
@@ -55,7 +59,7 @@ class Tableau1 extends Phaser.Scene {
         //Raquette Gauche
 
         this.gauche=this.physics.add.image(10,this.hauteur/2-50,'ovni1').setOrigin( 0, 0);
-        this.gauche.setDisplaySize(20,100);
+        this.gauche.setDisplaySize(60,100);
         this.gauche.body.setAllowGravity(false)
         this.gauche.setImmovable(true)
         this.gauche.body.setVelocityY(0);
@@ -70,8 +74,15 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.balle,this.droite, function(){
             console.log('touche droit')
             me.rebond(me.droite)
+            me.sound.play('balle');
         });
-        this.physics.add.collider(this.balle,this.gauche);
+        
+        this.physics.add.collider(this.balle,this.gauche, function(){
+            console.log('touche gauche')
+            me.rebond(me.gauche)
+            me.sound.play('balle');
+        });
+
 
         //Pour compter les points
 
