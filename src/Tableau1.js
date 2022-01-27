@@ -40,15 +40,24 @@ class Tableau1 extends Phaser.Scene {
         this.bas.setImmovable(true);
         this.bas.setTintFill(0x000000)
 
-        //Balle
+        //Balles
 
         this.balle=this.physics.add.image(this.largeur/2,this.hauteur/2,'circle').setOrigin(0,0)
         this.balle.setDisplaySize(20,20);
         this.balle.body.setBounce(1.2,1.2)
         this.balle.setVelocity(300)
-        this.balle.setVelocityX(Phaser.Math.Between(-200,200))
+        this.balle.setVelocityX(Phaser.Math.Between(-200,0))
         this.balle.setVelocityY(Phaser.Math.Between(0,0))
         this.balle.body.setMaxVelocityY(200,200)
+
+
+        this.balle2=this.physics.add.image(this.largeur/2,this.hauteur/2,'circle').setOrigin(0,0)
+        this.balle2.setDisplaySize(20,20);
+        this.balle2.body.setBounce(1.2,1.2)
+        this.balle2.setVelocity(300)
+        this.balle2.setVelocityX(Phaser.Math.Between(0,200))
+        this.balle2.setVelocityY(Phaser.Math.Between(0,0))
+        this.balle2.body.setMaxVelocityY(200,200)
 
 
 
@@ -76,21 +85,45 @@ class Tableau1 extends Phaser.Scene {
         this.physics.add.collider(this.balle,this.bas, function(){
             me.sound.play('balle');
         });
+
+        this.physics.add.collider(this.balle2,this.bas, function(){
+            me.sound.play('balle');
+        });
+
         this.physics.add.collider(this.balle,this.haut, function(){
             me.sound.play('balle');
         });
 
+        this.physics.add.collider(this.balle2,this.haut, function(){
+            me.sound.play('balle');
+        });
+
         this.physics.add.collider(this.balle,this.droite, function(){
-            console.log('touche droit')
             me.rebond(me.droite)
             me.sound.play('balle');
         });
 
+        this.physics.add.collider(this.balle2,this.droite, function(){
+            me.rebond2(me.droite)
+            me.sound.play('balle');
+        });
+
         this.physics.add.collider(this.balle,this.gauche, function(){
-            console.log('touche gauche')
             me.rebond(me.gauche)
             me.sound.play('balle');
         });
+
+        this.physics.add.collider(this.balle2,this.gauche, function(){
+            me.rebond2(me.gauche)
+            me.sound.play('balle');
+        });
+
+        this.physics.add.collider(this.balle,this.balle2, function(){
+            me.rebond(me.balle)
+            me.rebond2(me.balle2)
+            me.sound.play('balle');
+        });
+
 
 
         //Pour compter les points
@@ -122,6 +155,27 @@ class Tableau1 extends Phaser.Scene {
 
     }
 
+    rebond2(raquette){
+
+        let me=this;
+
+        console.log(raquette.y)
+        console.log(me.balle2.y)
+        console.log((me.balle2.y)-(raquette.y))
+
+        let hauteurRaquette2 = raquette.displayHeight;
+
+        let positionRelativeRaquette2 =(this.balle2.y-raquette.y);
+
+        positionRelativeRaquette2 = (positionRelativeRaquette2/hauteurRaquette2);
+
+        positionRelativeRaquette2 = (positionRelativeRaquette2*2-1);
+        console.log(positionRelativeRaquette2);
+
+        this.balle2.setVelocityY( this.balle2.body.velocity.y + positionRelativeRaquette2 * hauteurRaquette2)
+
+    }
+
     win(joueur){
         joueur.score ++;
 
@@ -138,7 +192,7 @@ class Tableau1 extends Phaser.Scene {
         {
             switch (kevent.keyCode)
             {
-                case Phaser.Input.Keyboard.KeyCodes.A:
+                case Phaser.Input.Keyboard.KeyCodes.S:
                     if(me.gauche.y < me.haut.y+20){
                         me.gauche.setVelocityY(0)
                     }
@@ -148,7 +202,7 @@ class Tableau1 extends Phaser.Scene {
                     break;
 
 
-                case Phaser.Input.Keyboard.KeyCodes.Q:
+                case Phaser.Input.Keyboard.KeyCodes.X:
                     if(me.gauche.y > me.bas.y-100){
                         me.gauche.setVelocityY(0)
                     }else {
@@ -157,7 +211,7 @@ class Tableau1 extends Phaser.Scene {
                     break;
 
 
-                case Phaser.Input.Keyboard.KeyCodes.P:
+                case Phaser.Input.Keyboard.KeyCodes.J:
                     if(me.droite.y < me.haut.y+20){
                         me.droite.setVelocityY(0)
                     }
@@ -167,7 +221,7 @@ class Tableau1 extends Phaser.Scene {
                     break;
 
 
-                case Phaser.Input.Keyboard.KeyCodes.M:
+                case Phaser.Input.Keyboard.KeyCodes.N:
                     if(me.droite.y > me.bas.y-100){
                         me.droite.setVelocityY(0)
                     }else {
@@ -180,16 +234,16 @@ class Tableau1 extends Phaser.Scene {
         {
             switch (kevent.keyCode)
             {
-                case Phaser.Input.Keyboard.KeyCodes.A:
+                case Phaser.Input.Keyboard.KeyCodes.S:
                     me.gauche.body.setVelocityY(0);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.Q:
+                case Phaser.Input.Keyboard.KeyCodes.X:
                     me.gauche.body.setVelocityY(0);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.P:
+                case Phaser.Input.Keyboard.KeyCodes.J:
                     me.droite.body.setVelocityY(0);
                     break;
-                case Phaser.Input.Keyboard.KeyCodes.M:
+                case Phaser.Input.Keyboard.KeyCodes.N:
                     me.droite.body.setVelocityY(0);
                     break;
             }
@@ -205,6 +259,15 @@ class Tableau1 extends Phaser.Scene {
                 this.balle.body.setVelocityX(Phaser.Math.Between(-300,300));
                 this.balle.body.setVelocityY(Phaser.Math.Between(-300,300));
             }
+
+            if(this.balle2.x > this.largeur){
+                this.win(this.jGauche);
+                this.balle2.x = this.largeur/2;
+                this.balle2.y = this.hauteur/2;
+                this.balle2.body.setVelocityX(Phaser.Math.Between(-300,300));
+                this.balle2.body.setVelocityY(Phaser.Math.Between(-300,300));
+            }
+
             if(this.balle.x < 0){
                 this.win(this.jDroite);
                 this.balle.x = this.largeur/2;
@@ -212,11 +275,26 @@ class Tableau1 extends Phaser.Scene {
                 this.balle.body.setVelocityX(Phaser.Math.Between(-300,300));
                 this.balle.body.setVelocityY(Phaser.Math.Between(-300,300));
             }
+
+            if(this.balle2.x < 0){
+                this.win(this.jDroite);
+                this.balle2.x = this.largeur/2;
+                this.balle2.y = this.hauteur/2;
+                this.balle2.body.setVelocityX(Phaser.Math.Between(-300,300));
+                this.balle2.body.setVelocityY(Phaser.Math.Between(-300,300));
+            }
             if(this.balle.y < 0){
                 this.balle.y = 0
             }
             if(this.balle.y > this.hauteur){
                 this.balle.y = this.hauteur
+            }
+
+            if(this.balle2.y < 0){
+                this.balle2.y = 0
+            }
+            if(this.balle2.y > this.hauteur){
+                this.balle2.y = this.hauteur
             }
 
         }
